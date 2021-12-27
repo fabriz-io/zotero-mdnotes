@@ -425,18 +425,13 @@ function noteToMarkdown(item) {
  * Get an item's base file name from setting's preferences
  */
 function getFileName(item) {
-  let citekeyTitle = getPref("citekey_title");
+  let year = new Date(item.getField("date")).getFullYear().toString();
+  let title = item.getField("title");
+  let authorLastName = item.getCreator(0).lastName;
 
-  if (citekeyTitle) {
-    return getCiteKey(item);
-  } else {
-    // TODO add checks for Windows special characters
-    if (getPref("link_style") === "wiki") {
-      return item.getField("title");
-    } else {
-      return lowerCaseDashTitle(item.getField("title"));
-    }
-  }
+  let filename = authorLastName + "_" + year + "_" + title;
+
+  return filename;
 }
 
 /**
